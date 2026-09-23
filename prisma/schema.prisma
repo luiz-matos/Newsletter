@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id               String        @id @default(cuid())
+  email            String        @unique
+  name             String?
+  stripeCustomerId String?       @unique
+  createdAt        DateTime      @default(now())
+  subscription     Subscription?
+}
+
+// O id é o mesmo da assinatura no Stripe
+model Subscription {
+  id        String   @id
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String
+  priceId   String
+  updatedAt DateTime @updatedAt
+}
