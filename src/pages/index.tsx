@@ -8,8 +8,7 @@ import Image from 'next/image'
 
 interface HomeProps {
   product: {
-    priceId: string
-    amount: number
+    amount: string
   }
 }
 
@@ -27,7 +26,7 @@ export default function Home({ product }: HomeProps) {
             Tenha acesso a todas publicações <br />
             <span>por apenas {product.amount} por mês</span>
           </p>
-          <SubscribeButton priceId={product.priceId} />
+          <SubscribeButton />
         </section>
         <Image
           src="/assets/avatar.svg"
@@ -44,7 +43,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID)
 
   const product = {
-    priceId: price.id,
     amount: Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',

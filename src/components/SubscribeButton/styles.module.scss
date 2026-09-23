@@ -17,4 +17,9 @@
     filter: brightness(0.8);
   }
 
+  &:disabled {
+    cursor: wait;
+    filter: brightness(0.6);
+  }
+
 }
