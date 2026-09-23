@@ -41,11 +41,11 @@ export default function Home({ product }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const price = await stripe.prices.retrieve('price_1KiotNAVtxKpobbb57k3MWML')
+  const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID)
 
   const product = {
     priceId: price.id,
-    amount: Intl.NumberFormat('pr-br', {
+    amount: Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(price.unit_amount / 100),

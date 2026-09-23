@@ -42,3 +42,19 @@
     margin-top: 2.5rem;
   }
 }
+
+@media (max-width: 720px) {
+  .contentContainer {
+    height: auto;
+    padding: 4rem 1.5rem;
+
+    img {
+      display: none;
+    }
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    line-height: 3.25rem;
+  }
+}
