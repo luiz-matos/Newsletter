@@ -30,7 +30,7 @@ export default function Post({ post }: PostProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res, params }) => {
-  const slug = String(params.slug)
+  const slug = String(params?.slug)
   if (!getPostSlugs().includes(slug)) {
     return { notFound: true }
   }

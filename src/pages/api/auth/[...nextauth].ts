@@ -1,12 +1,13 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
+import { requireEnv } from '../../../services/env'
 import { prisma } from '../../../services/prisma'
 
 export const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: requireEnv('GITHUB_ID'),
+      clientSecret: requireEnv('GITHUB_SECRET'),
       authorization: { params: { scope: 'read:user user:email' } },
     }),
   ],
@@ -26,8 +27,11 @@ export const authOptions: AuthOptions = {
       return true
     },
     async session({ session }) {
+      const email = session.user?.email
+      if (!email) return { ...session, activeSubscription: false }
+
       const subscription = await prisma.subscription.findFirst({
-        where: { status: 'active', user: { email: session.user.email } },
+        where: { status: 'active', user: { email } },
       })
       return { ...session, activeSubscription: Boolean(subscription) }
     },

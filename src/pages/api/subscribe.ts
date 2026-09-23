@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from './auth/[...nextauth]'
+import { requireEnv } from '../../services/env'
 import { prisma } from '../../services/prisma'
 import { stripe } from '../../services/stripe'
 
@@ -29,11 +30,11 @@ export default async function subscribe(req: NextApiRequest, res: NextApiRespons
     })
   }
 
-  const baseUrl = process.env.NEXTAUTH_URL
+  const baseUrl = requireEnv('NEXTAUTH_URL')
   const checkoutSession = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
-    line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
+    line_items: [{ price: requireEnv('STRIPE_PRICE_ID'), quantity: 1 }],
     allow_promotion_codes: true,
     success_url: `${baseUrl}/posts`,
     cancel_url: baseUrl,

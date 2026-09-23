@@ -1,6 +1,7 @@
 import Stripe from 'stripe'
+import { requireEnv } from './env'
 
-export const stripe = new Stripe(process.env.STRIPE_API_KEY, {
+export const stripe = new Stripe(requireEnv('STRIPE_API_KEY'), {
   appInfo: {
     name: 'EduNews',
   },

@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import { requireEnv } from '../services/env'
 import { stripe } from '../services/stripe'
 import { SubscribeButton } from '../components/SubscribeButton'
 
@@ -40,19 +41,18 @@ export default function Home({ product }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID)
+  const price = await stripe.prices.retrieve(requireEnv('STRIPE_PRICE_ID'))
 
   const product = {
     amount: Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
-    }).format(price.unit_amount / 100),
-
+    }).format((price.unit_amount ?? 0) / 100),
   }
   return {
     props: {
       product
     },
-    revalidate: 60 * 60 * 24 // 24hours
+    revalidate: 60 * 60 * 24, // 24 horas
   }
 }

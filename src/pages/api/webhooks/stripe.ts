@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
+import { requireEnv } from '../../../services/env'
 import { stripe } from '../../../services/stripe'
 import { saveSubscription } from '../../../services/subscriptions'
 
@@ -32,8 +33,8 @@ export default async function webhooks(req: NextApiRequest, res: NextApiResponse
   try {
     event = stripe.webhooks.constructEvent(
       await readRawBody(req),
-      req.headers['stripe-signature'],
-      process.env.STRIPE_WEBHOOK_SECRET,
+      req.headers['stripe-signature'] ?? '',
+      requireEnv('STRIPE_WEBHOOK_SECRET'),
     )
   } catch (error) {
     return res.status(400).send(`Webhook error: ${(error as Error).message}`)
@@ -42,7 +43,7 @@ export default async function webhooks(req: NextApiRequest, res: NextApiResponse
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object
-      if (session.mode === 'subscription') {
+      if (session.mode === 'subscription' && session.subscription && session.customer) {
         await saveSubscription(idOf(session.subscription), idOf(session.customer))
       }
       break

@@ -54,7 +54,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
-    props: { post: getPost(String(params.slug), { preview: true }) },
+    props: { post: getPost(String(params?.slug), { preview: true }) },
     revalidate: 60 * 60, // 1 hora
   }
 }
