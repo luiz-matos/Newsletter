@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/PostgreSQL-Banco-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Banco">
   <img src="https://img.shields.io/badge/Stripe-Assinaturas-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe Assinaturas">
   <img src="https://img.shields.io/badge/NextAuth-GitHub-181717?style=for-the-badge&logo=github" alt="NextAuth GitHub">
+  <img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-yellow?style=for-the-badge" alt="Licença MIT">
 </div>
 
 <br>
@@ -23,6 +24,7 @@ Fiz o projeto em 2022, estudando Next.js, e ele parou na página inicial: o logi
 - [🧩 Como o código funciona](#-como-o-código-funciona)
 - [🎓 O que aprendi em 2022](#-o-que-aprendi-em-2022)
 - [🔄 Revisitando o projeto em 2026](#-revisitando-o-projeto-em-2026)
+- [📄 Licença](#-licença)
 
 ## 🚀 Como rodar
 
@@ -167,6 +169,10 @@ Atualizei do Next 12 para o 16 sem migrar para o App Router. O Pages Router cont
 - **Serviços separados das páginas.** Stripe, Prisma, posts e assinaturas ficam em `src/services`, e as páginas só chamam funções.
 - **TypeScript em modo strict.** Pegou nulos que antes passavam, como o `unit_amount` do preço e o `params` das rotas.
 - **Variáveis obrigatórias com `requireEnv`.** Se faltar uma variável, o erro diz qual é, em vez de uma falha genérica do Stripe ou do GitHub.
+
+## 📄 Licença
+
+[MIT](LICENSE)
 
 ---
 
