@@ -1,10 +1,30 @@
-# Edu News
+# 📰 Edu News
 
-Site de assinatura de uma newsletter sobre React, feito com Next.js, TypeScript, Stripe, login com GitHub e Postgres.
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs" alt="Next.js 16">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript 5">
+  <img src="https://img.shields.io/badge/Prisma-7-2D3748?style=for-the-badge&logo=prisma" alt="Prisma 7">
+  <img src="https://img.shields.io/badge/PostgreSQL-Banco-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL Banco">
+  <img src="https://img.shields.io/badge/Stripe-Assinaturas-635BFF?style=for-the-badge&logo=stripe&logoColor=white" alt="Stripe Assinaturas">
+  <img src="https://img.shields.io/badge/NextAuth-GitHub-181717?style=for-the-badge&logo=github" alt="NextAuth GitHub">
+</div>
+
+<br>
+
+> 🎯 **Site de assinatura de uma newsletter sobre React**, feito com Next.js, TypeScript, Stripe, login com GitHub e Postgres.
 
 Fiz o projeto em 2022, estudando Next.js, e ele parou na página inicial: o login não funcionava e o botão de assinar não fazia nada. Em 2026 voltei a ele para terminar o fluxo de assinatura, trocar o banco (o FaunaDB foi desligado) e atualizar tudo para o Next 16.
 
-## Como rodar
+## 📋 Índice
+
+- [🚀 Como rodar](#-como-rodar)
+- [✨ Recursos](#-recursos)
+- [🧩 Como o código funciona](#-como-o-código-funciona)
+- [🎓 O que aprendi em 2022](#-o-que-aprendi-em-2022)
+- [🔄 Revisitando o projeto em 2026](#-revisitando-o-projeto-em-2026)
+
+## 🚀 Como rodar
 
 Precisa de Node 20.9 ou mais novo, Yarn, um Postgres, uma conta do Stripe em modo de teste e um app OAuth do GitHub.
 
@@ -36,7 +56,7 @@ yarn dev
 
 No checkout de teste, o cartão `4242 4242 4242 4242` com qualquer data futura aprova o pagamento.
 
-## Recursos
+## ✨ Recursos
 
 - Login com GitHub
 - Assinatura mensal pelo checkout do Stripe
@@ -45,7 +65,7 @@ No checkout de teste, o cartão `4242 4242 4242 4242` com qualquer data futura a
 - Prévia com os 3 primeiros blocos do texto para quem não assina
 - Layout ajustado para celular
 
-## Como o código funciona
+## 🧩 Como o código funciona
 
 ```
 content/posts/              posts em Markdown, com título e data no cabeçalho
@@ -79,7 +99,7 @@ src/
 - **Webhook.** O Stripe avisa `checkout.session.completed` e as mudanças da assinatura. A rota confere a assinatura do evento e chama `saveSubscription`, que busca a assinatura no Stripe e grava o status no banco.
 - **Posts.** A prévia é gerada no build, igual para todo mundo. O post completo passa pelo servidor a cada acesso para conferir a sessão, e quem não assina é redirecionado para a prévia.
 
-## O que aprendi em 2022
+## 🎓 O que aprendi em 2022
 
 **Renderização no Next.** Existem três estratégias principais:
 
@@ -101,11 +121,11 @@ Neste projeto as três aparecem: a home e a prévia são estáticas, o post comp
 
 **Banco em ambiente serverless.** Em serverless, abrir uma conexão com um banco tradicional a cada requisição custa caro. Por isso usei o FaunaDB, um banco acessado por HTTP. O DynamoDB seria outra opção.
 
-## Revisitando o projeto em 2026
+## 🔄 Revisitando o projeto em 2026
 
 A análise encontrou o login quebrado, o botão de assinar sem ação e metade do fluxo de assinatura por fazer.
 
-### Bugs corrigidos
+### 🐛 Bugs corrigidos
 
 | Bug | Causa | Correção |
 |---|---|---|
@@ -117,7 +137,7 @@ A análise encontrou o login quebrado, o botão de assinar sem ação e metade d
 | Links do header recarregavam a home | `href=""` e "Home" sempre ativo | `ActiveLink` com o caminho atual |
 | Home estourava a largura no celular | Imagem de 336 px ao lado do texto | Imagem escondida abaixo de 720 px |
 
-### Decisões técnicas
+### 🧠 Decisões técnicas
 
 **Postgres com Prisma no lugar do FaunaDB**
 
@@ -147,3 +167,13 @@ Atualizei do Next 12 para o 16 sem migrar para o App Router. O Pages Router cont
 - **Serviços separados das páginas.** Stripe, Prisma, posts e assinaturas ficam em `src/services`, e as páginas só chamam funções.
 - **TypeScript em modo strict.** Pegou nulos que antes passavam, como o `unit_amount` do preço e o `params` das rotas.
 - **Variáveis obrigatórias com `requireEnv`.** Se faltar uma variável, o erro diz qual é, em vez de uma falha genérica do Stripe ou do GitHub.
+
+---
+
+<div align="center">
+  <p>Desenvolvido por <strong>Luiz Matos</strong></p>
+  <p>
+    <a href="https://github.com/luiz-matos">GitHub</a> •
+    <a href="https://www.linkedin.com/in/luizeduardomatos/">LinkedIn</a>
+  </p>
+</div>
